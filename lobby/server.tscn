@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dw6rnv8mk13sb"]
 
-[ext_resource type="Script" path="res://server.gd" id="1_romag"]
+[ext_resource type="Script" path="res://lobby/server.gd" id="1_romag"]
 
 [node name="Server" type="Node"]
 script = ExtResource("1_romag")

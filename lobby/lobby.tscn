@@ -1,0 +1,96 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbtdtqw8lj7vw"]
+
+[ext_resource type="Script" path="res://lobby/lobby.gd" id="1_m8d13"]
+[ext_resource type="PackedScene" uid="uid://q2rmm34e7veg" path="res://lobby/client.tscn" id="2_hv2ox"]
+[ext_resource type="PackedScene" uid="uid://dw6rnv8mk13sb" path="res://lobby/server.tscn" id="3_8o457"]
+[ext_resource type="PackedScene" uid="uid://cgfutfuu7e2y8" path="res://lobby/player_list_item.tscn" id="4_5sqbn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a4n1y"]
+resource_local_to_scene = true
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.317647, 0.164706, 0.835294, 1)
+border_color = Color(0.317647, 0.164706, 0.835294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vyikx"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.937255, 0.937255, 0.937255, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0psw7"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Lobby" type="CanvasLayer" node_paths=PackedStringArray("player_list_container")]
+script = ExtResource("1_m8d13")
+client_scene = ExtResource("2_hv2ox")
+server_scene = ExtResource("3_8o457")
+player_list_container = NodePath("VBoxContainer/Content PanelContainer/Border PanelContainer/ScrollContainer/VBoxContainer2/VBoxContainer")
+player_list_item_scene = ExtResource("4_5sqbn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Toolbar PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a4n1y")
+
+[node name="Label" type="Label" parent="VBoxContainer/Toolbar PanelContainer"]
+layout_mode = 2
+text = "Lobby"
+horizontal_alignment = 1
+
+[node name="Leave Button" type="Button" parent="VBoxContainer/Toolbar PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Leave"
+
+[node name="Content PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_vyikx")
+
+[node name="Border PanelContainer" type="PanelContainer" parent="VBoxContainer/Content PanelContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_0psw7")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Content PanelContainer/Border PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Content PanelContainer/Border PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/Content PanelContainer/Border PanelContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Connected players:"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Content PanelContainer/Border PanelContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="VBoxContainer/Toolbar PanelContainer/Leave Button" to="." method="_on_leave_button_pressed"]

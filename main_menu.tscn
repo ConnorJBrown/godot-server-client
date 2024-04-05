@@ -1,39 +1,64 @@
-[gd_scene load_steps=4 format=3 uid="uid://dy6ouqvpiheu6"]
+[gd_scene load_steps=5 format=3 uid="uid://dy6ouqvpiheu6"]
 
 [ext_resource type="Script" path="res://main_menu.gd" id="1_ps2q5"]
-[ext_resource type="PackedScene" uid="uid://q2rmm34e7veg" path="res://client.tscn" id="2_k7dmo"]
-[ext_resource type="PackedScene" uid="uid://dw6rnv8mk13sb" path="res://server.tscn" id="3_qqclm"]
+[ext_resource type="PackedScene" uid="uid://cbtdtqw8lj7vw" path="res://lobby/lobby.tscn" id="2_t36td"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lvjoo"]
+resource_local_to_scene = true
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.317647, 0.164706, 0.835294, 1)
+border_color = Color(0.317647, 0.164706, 0.835294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yoohr"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.937255, 0.937255, 0.937255, 1)
 
 [node name="Main Menu" type="CanvasLayer"]
 script = ExtResource("1_ps2q5")
-client_scene = ExtResource("2_k7dmo")
-server_scene = ExtResource("3_qqclm")
+lobby_scene = ExtResource("2_t36td")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -75.0
-offset_top = -33.0
-offset_right = 75.0
-offset_bottom = 33.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
-[node name="Host" type="Button" parent="VBoxContainer"]
+[node name="Toolbar PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lvjoo")
+
+[node name="Label" type="Label" parent="VBoxContainer/Toolbar PanelContainer"]
+layout_mode = 2
+text = "Godot 4 - RPC Server Client Demo"
+horizontal_alignment = 1
+
+[node name="Content PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_yoohr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Content PanelContainer"]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Host" type="Button" parent="VBoxContainer/Content PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Host"
 
-[node name="Join" type="Button" parent="VBoxContainer"]
+[node name="Join" type="Button" parent="VBoxContainer/Content PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Join"
 
-[node name="Label" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Connected users:"
-horizontal_alignment = 1
-
-[connection signal="pressed" from="VBoxContainer/Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="VBoxContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="VBoxContainer/Content PanelContainer/VBoxContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="VBoxContainer/Content PanelContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
